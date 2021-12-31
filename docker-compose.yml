@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  miniflux:
+    image: miniflux/miniflux:2.0.34
+    ports:
+    - 8080:8080
+    environment:
+      DATABASE_URL: postgres://miniflux:secret@postgres/miniflux?sslmode=disable
+      RUN_MIGRATIONS: 1
+      CREATE_ADMIN: 1
+      ADMIN_USERNAME: johndoe
+      ADMIN_PASSWORD: password
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:13
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: miniflux
+      POSTGRES_USER: miniflux
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - ./volumes/postgres/:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD', 'pg_isready']
+
+networks:
+  default:
+    name: miniflux
