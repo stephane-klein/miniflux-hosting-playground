@@ -4,6 +4,13 @@ This repository contains a environment that allows to test [miniflux](https://gi
 
 Deployment is powered by Docker and `docker-compose.yml` file.
 
+Tested with this version (for `--wait` support):
+
+```sh
+$ docker compose version
+Docker Compose version 2.2.2
+```
+
 Let's start the services:
 
 ```sh
